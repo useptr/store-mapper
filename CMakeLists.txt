@@ -45,7 +45,14 @@ target_sources(
     src/main.cc
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE pqxx)
+target_link_libraries(
+    ${PROJECT_NAME} 
+    PRIVATE 
+    pqxx
+    types
+    models
+    sqlmapper
+)
 
 # if (WIN32)
 # # C:\term_7\рпбд\l1\build\_deps\libpqxx-build\src\Debug
@@ -69,7 +76,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE pqxx)
 #     )
 # endif()
 
-
+# set(POSTGRESQL_BINARY_DIR "C:/Program Files/PostgreSQL/16/bin")
 # if (WIN32)
 #     add_custom_command(
 #         TARGET ${PROJECT_NAME} POST_BUILD
@@ -78,7 +85,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE pqxx)
 #     ) # visual studio is so stupid, copy pqxx.lib to bin dir
 #     add_custom_command(
 #         TARGET ${PROJECT_NAME} POST_BUILD
-#         COMMAND "${CMAKE_COMMAND}" -E copy_directory "C:/Program Files/PostgreSQL/16/bin" "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
+#         COMMAND "${CMAKE_COMMAND}" -E copy_directory "${POSTGRESQL_BINARY_DIR}" "$<TARGET_FILE_DIR:${PROJECT_NAME}>"
 #         VERBATIM
 #     )
 #     # set_target_properties(${PROJECT_NAME} PROPERTIES 

@@ -49,9 +49,10 @@ target_sources(
 
 target_link_libraries(
     tests
+    PRIVATE 
     # store
-    GTest::gmock
     GTest::gtest
+    # GTest::gmock
     GTest::gtest_main
     pqxx
 )

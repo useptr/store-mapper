@@ -1,10 +1,14 @@
+module;
 #include <iostream>
 #include <pqxx/pqxx>
 #include <exception>
 
+import Types;
+import SqlStatementBuilder;
+export module Mapper;
 
-class StoreMapper
-{
+namespace project {
+export class SqlMapper {
 public:
     bool CreateTable(pqxx::connection& connection)
     {
@@ -37,7 +41,7 @@ public:
         try
         {
             pqxx::work work(connection);
-            work.exec("CREATE TABLE cities (name varchar(80), location point, population int);");
+            work.exec(sql_builder.);
             work.commit();
         }
         catch (const std::exception &e)
@@ -71,6 +75,8 @@ public:
             std::cerr << e.what() << std::endl;
         }
     }
-    
 private:
+    SqlStatementBuilder sql_builder;
 };
+
+} // namespace project

@@ -1,10 +1,17 @@
+module;
+
 #include <string>
 #include <string_view>
 #include <sstream>
 #include <vector>
 
-struct Field {
-    using string = std::string;
+import Types;
+
+export module SqlStatementBuilder;
+
+namespace project {
+export struct Field final {
+    using string = String;
     char delimiter = ' ';
     string name;
     string options;  // e.g. "VARCHAR(255) NOT NULL", "INTEGER PRIMARY KEY"
@@ -20,11 +27,10 @@ struct Field {
 };
 
 // template <class Entity, class Mapping>
-class SqlStatementBuilder
+export class SqlStatementBuilder
 {
 public:
     using Fields = std::vector<Field>;
-
     /*
         CREATE TABLE IF NOT EXISTS products (
                 id SERIAL PRIMARY KEY,
@@ -33,7 +39,7 @@ public:
                 price DECIMAL
             );
     */
-    std::string CreateTable(const Fields& fields) {
+    String CreateTable(const Fields& fields) {
         std::ostringstream sql;
         sql << "CREATE TABLE IF NOT EXISTS " << table_name_ << " (";
         for (size_t i = 0; i < fields.size(); ++i) {
@@ -42,6 +48,7 @@ public:
                 sql << ", ";
             }
         }
+        sql << '\n' << options_;
         sql << ");";
         return sql.str();
     }
@@ -49,7 +56,7 @@ public:
         INSERT INTO table1 (column1, column2, …)
         VALUES (value1, value2, …);
     */
-    std::string Insert(const Fields& fields) {
+    String Insert(const Fields& fields) {
         std::ostringstream sql;
         sql << "INSERT INTO " << table_name_ << " (";
 
@@ -77,7 +84,7 @@ public:
     /*
         
     */
-    std::string SelectAll() {
+    String SelectAll() {
         std::ostringstream sql;
         sql << "SELECT * FROM " << table_name_ << ';';
         return sql.str();
@@ -89,7 +96,7 @@ public:
             ...
         WHERE condition;
     */
-    std::string Update(const Fields& fields, const std::string& condition) {
+    String Update(const Fields& fields, const String& condition) {
         std::ostringstream sql;
         sql << "UPDATE " << table_name_ << " SET ";
 
@@ -125,7 +132,7 @@ public:
     /*
         
     */
-    std::string Delete(const std::string& condition) {
+    String Delete(const String& condition) {
         std::ostringstream sql;
         sql << "DELETE FROM " << table_name_;
 
@@ -137,5 +144,8 @@ public:
         return sql.str();
     }
 private:
-    std::string_view table_name__;
+    String table_name_;
+    String options_;
 };
+
+} // namespace project
