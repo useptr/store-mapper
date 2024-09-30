@@ -18,35 +18,12 @@ enable_testing()
 
 # add_subdirectory()
 
-
-# add_executable(
-#   simple_test
-# )
-# target_sources(
-#   simple_test
-#     PUBLIC
-#     FILE_SET CXX_MODULES FILES
-#     test.cxx
-# )
-# target_link_libraries(
-#   simple_test
-#     GTest::gmock
-#     GTest::gtest
-#     GTest::gtest_main
-# )
-
 add_executable(
   tests
+  models/store_test.cc
+    #   sqlstatementbuilder.h
+    # sqlmapper.h
 )
-
-target_sources(
-    tests
-    PUBLIC
-    FILE_SET CXX_MODULES FILES
-    models/store_test.cxx
-    # database.cxx
-)
-
 target_link_libraries(
     tests
     PRIVATE 
@@ -56,7 +33,6 @@ target_link_libraries(
     GTest::gtest_main
     pqxx
 )
-
 include(GoogleTest)
 gtest_discover_tests(tests)
 

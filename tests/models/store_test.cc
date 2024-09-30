@@ -19,7 +19,7 @@ namespace {
 //pqxx::connection DatabaseFixture::connection_ = std::move(pqxx::connection("user=admin password=admin host=localhost port=5432 dbname=store_db"));
 
 pqxx::connection connection = std::move(pqxx::connection("user=admin password=admin host=localhost port=5432 dbname=store_db"));
-TEST(DatabaseFixture, CheckProductsTableExists) {
+TEST(Database, CheckProductsTableExists) {
     // Arrange
     pqxx::work work(connection);
     const std::string table_name = "cities";
@@ -35,6 +35,23 @@ TEST(DatabaseFixture, CheckProductsTableExists) {
         std::cerr << e.what() << std::endl;
     }
 }
+// TEST(Database, SelectTest) {
+//     // Arrange
+//     pqxx::work work(connection);
+//     const std::string table_name = "test";
+//     const std::string query = "SELECT * FROM " + work.quote(table_name) + ";";
+//     // Act
+//     try {
+//         auto result = work.exec(query);
+//         work.commit();
+//         // auto [id, number, birth_date, first_name, middle_name, last_name, address, issue_date, issued_by] = result[0].as<bool>();
+//         // Assert
+//         // EXPECT_TRUE(is_table_exist);
+//     } catch (const std::exception &e) {
+//         std::cerr << e.what() << std::endl;
+//     }
+// }
+
 //TEST_F(DatabaseFixture, CheckStoreTableExists) {
 //    // Arrange
 //    const std::string table_name = "store";

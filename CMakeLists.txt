@@ -43,15 +43,19 @@ target_sources(
     ${PROJECT_NAME}
     PUBLIC
     src/main.cc
+    src/sqlmapper.h
+    src/dbconfig.h
+    src/sqlstatementbuilder.h
+    src/models.h
+    src/types.h
 )
 
 target_link_libraries(
     ${PROJECT_NAME} 
     PRIVATE 
     pqxx
-    types
-    models
-    sqlmapper
+    # models
+    # sqlmapper
 )
 
 # if (WIN32)
